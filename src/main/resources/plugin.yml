@@ -1,0 +1,17 @@
+name: DireParkour
+version: ${version}
+main: net.direskies.direparkour.Main
+author: UltraGameCoder
+description: Made by UltraGameCoder
+api-version: 1.18
+
+commands:
+  DireParkour:
+    description: The main command of Dire Parkour.
+    aliases:
+      - pk
+      - parkour
+
+permissions:
+  direparkour.admin:
+    description: Required to configure DireParkour
