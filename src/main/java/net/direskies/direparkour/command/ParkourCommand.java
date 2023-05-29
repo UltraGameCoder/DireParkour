@@ -1,7 +1,7 @@
 package net.direskies.direparkour.command;
 
 import net.direskies.direparkour.CourseBuilder;
-import net.direskies.direparkour.Main;
+import net.direskies.direparkour.ParkourPlugin;
 import net.direskies.direparkour.PlayerTracker;
 import net.direskies.direparkour.model.Course;
 import net.direskies.direparkour.util.Locale;
@@ -25,9 +25,9 @@ public class ParkourCommand implements TabExecutor {
     private static final List<String> COMMANDS_ADMIN = Arrays.asList("info", "quit", "list", "setup", "delete");
     private static final List<String> SETUP_COMMANDS = Arrays.asList("start", "finish", "cancel");
 
-    private final Main plugin;
+    private final ParkourPlugin plugin;
 
-    public ParkourCommand(Main plugin) {
+    public ParkourCommand(ParkourPlugin plugin) {
         this.plugin = plugin;
     }
 

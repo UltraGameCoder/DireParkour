@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
-public class Main extends JavaPlugin {
+public class ParkourPlugin extends JavaPlugin {
 
     private final Logger log = Logger.getLogger("Minecraft");
 
