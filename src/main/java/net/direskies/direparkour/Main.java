@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(playerTracker, this);
         pm.registerEvents(courseBuilder, this);
 
-        this.getCommand("DireParkour").setExecutor(new DireParkourCMD(this));
+        this.getCommand("parkour").setExecutor(new DireParkourCMD(this));
 
         log.info("===================================");
         log.info(this.getName()+" has been Enabled!");
