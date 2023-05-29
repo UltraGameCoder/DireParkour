@@ -52,12 +52,14 @@ public class CourseBuilder implements Listener {
                 event.getPlayer().sendMessage(Locale.CMD_DIREPARKOUR_SETUP_NOT_IN_PROGRESS.msg());
                 return;
             }
+
             int checkpoint = checkpoints.indexOf(event.getClickedBlock());
             if (checkpoint == -1) return;
             if (checkpoints.remove(event.getClickedBlock())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(Locale.CMD_DIREPARKOUR_SETUP_CHECKPOINT_REMOVED.msg(String.valueOf(checkpoint)));
             }
+
         } else if (event.getAction().isRightClick()) {
             //Add the clicked checkpoint.
             List<Block> checkpoints = builders.get(event.getPlayer());
