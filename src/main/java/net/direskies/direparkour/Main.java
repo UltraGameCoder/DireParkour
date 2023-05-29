@@ -1,6 +1,6 @@
 package net.direskies.direparkour;
 
-import net.direskies.direparkour.command.DireParkourCMD;
+import net.direskies.direparkour.command.ParkourCommand;
 import net.direskies.direparkour.registries.CourseRegistry;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(playerTracker, this);
         pm.registerEvents(courseBuilder, this);
 
-        this.getCommand("parkour").setExecutor(new DireParkourCMD(this));
+        this.getCommand("parkour").setExecutor(new ParkourCommand(this));
 
         log.info("===================================");
         log.info(this.getName()+" has been Enabled!");

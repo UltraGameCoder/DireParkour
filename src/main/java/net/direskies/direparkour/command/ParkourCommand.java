@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DireParkourCMD implements TabExecutor {
+public class ParkourCommand implements TabExecutor {
 
     private static final List<String> COMMANDS_USER = Arrays.asList("info", "quit");
     private static final List<String> COMMANDS_ADMIN = Arrays.asList("info", "quit", "list", "setup", "delete");
@@ -27,7 +27,7 @@ public class DireParkourCMD implements TabExecutor {
 
     private final Main plugin;
 
-    public DireParkourCMD(Main plugin) {
+    public ParkourCommand(Main plugin) {
         this.plugin = plugin;
     }
 
