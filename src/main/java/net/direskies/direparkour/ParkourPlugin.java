@@ -20,10 +20,10 @@ public class ParkourPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.courseRegistry = new CourseRegistry(this);
-        this.playerTracker = new PlayerTracker(courseRegistry);
+        this.playerTracker = new PlayerTracker(courseRegistry, getServer());
         this.courseBuilder = new CourseBuilder(courseRegistry);
 
-        PluginManager pm = this.getServer().getPluginManager();
+        PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(playerTracker, this);
         pm.registerEvents(courseBuilder, this);
 
