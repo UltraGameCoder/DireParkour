@@ -36,13 +36,9 @@ public class PlayerTracker implements Listener {
     private final CourseRegistry courseRegistry;
     private final Map<Player, CourseProgress> tracking;
 
-    private final MiniMessage serializer;
-
     public PlayerTracker(CourseRegistry courseRegistry) {
         this.courseRegistry = courseRegistry;
         this.tracking = new HashMap<>();
-
-        serializer = MiniMessage.miniMessage();
     }
 
     @EventHandler(priority = EventPriority.LOW)
