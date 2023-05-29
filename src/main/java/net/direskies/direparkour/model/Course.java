@@ -1,6 +1,5 @@
 package net.direskies.direparkour.model;
 
-import net.direskies.direparkour.exception.CourseException;
 import org.bukkit.World;
 import org.bukkit.util.BlockVector;
 import org.jetbrains.annotations.NotNull;
