@@ -13,10 +13,13 @@ public class Course {
     private final BlockVector[] checkpoints;
     private final String[] rewardCommands;
 
-    public Course(@NotNull String name, @NotNull World world, @NotNull BlockVector[] checkpoints, String[] rewardCommands) {
+    public Course(@NotNull String name,
+                  @NotNull World world,
+                  @NotNull BlockVector[] checkpoints,
+                  String[] rewardCommands) {
         this.name = name;
         this.world = world;
-        if (checkpoints.length == 1) throw new CourseException(name, "Course needs at least 2 checkpoints!");
+        if (checkpoints.length == 1) throw new IllegalStateException("Course " + name + " needs at least 2 checkpoints!");
         this.checkpoints = checkpoints;
         this.rewardCommands = rewardCommands;
     }
