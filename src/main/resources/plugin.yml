@@ -1,6 +1,6 @@
 name: DireParkour
 version: ${version}
-main: net.direskies.direparkour.Main
+main: net.direskies.direparkour.ParkourPlugin
 author: UltraGameCoder
 description: Made by UltraGameCoder
 api-version: 1.18
