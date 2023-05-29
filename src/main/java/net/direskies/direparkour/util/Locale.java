@@ -60,7 +60,7 @@ public enum Locale {
             <color:#CCFF00>Left-click <color:#808080>a pressure plate to remove a checkpoint
             <color:#CCFF00>Right-click <color:#808080>a pressure to select a new checkpoint
             """);
-    private static final MiniMessage serializer = MiniMessage.miniMessage();
+    private static final MiniMessage SERIALIZER = MiniMessage.miniMessage();
     private final String raw;
 
     Locale(String raw) {
@@ -72,7 +72,7 @@ public enum Locale {
     }
 
     public @NotNull Component msg() {
-        return serializer.deserialize(raw)
+        return SERIALIZER.deserialize(raw)
                 .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 
@@ -97,17 +97,17 @@ public enum Locale {
     }
 
     public @NotNull Component msg(String... args) {
-        return serializer.deserialize(raw, getResolvers(args))
+        return SERIALIZER.deserialize(raw, getResolvers(args))
                 .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 
     public @NotNull Component msg(ComponentLike... args) {
-        return serializer.deserialize(raw, getResolvers(args));
+        return SERIALIZER.deserialize(raw, getResolvers(args));
     }
 
     public @NotNull List<Component> msgMultiline() {
         return Arrays.stream((raw).split("\\n"))
-                .map(serializer::deserialize)
+                .map(SERIALIZER::deserialize)
                 .map(component -> component.decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE))
                 .collect(Collectors.toList());
     }
@@ -115,7 +115,7 @@ public enum Locale {
     public @NotNull List<Component> msgMultiline(String... args) {
         TagResolver[] resolvers = getResolvers(args);
         return Arrays.stream(raw.split("\\n"))
-                .map(line -> serializer.deserialize(line, resolvers))
+                .map(line -> SERIALIZER.deserialize(line, resolvers))
                 .map(component -> component.decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE))
                 .collect(Collectors.toList());
     }
@@ -123,7 +123,7 @@ public enum Locale {
     public @NotNull List<Component> msgMultiline(ComponentLike... args) {
         TagResolver[] resolvers = getResolvers(args);
         return Arrays.stream(raw.split("\\n"))
-                .map(line -> serializer.deserialize(line, resolvers))
+                .map(line -> SERIALIZER.deserialize(line, resolvers))
                 .map(component -> component.decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE))
                 .collect(Collectors.toList());
     }

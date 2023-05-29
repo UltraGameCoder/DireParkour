@@ -1,6 +1,8 @@
 package net.direskies.direparkour;
 
-import net.direskies.direparkour.command.DireParkourCMD;
+import net.direskies.direparkour.command.ParkourCommand;
+import net.direskies.direparkour.listeners.CourseBuilder;
+import net.direskies.direparkour.listeners.PlayerTracker;
 import net.direskies.direparkour.registries.CourseRegistry;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -8,9 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
-public class Main extends JavaPlugin {
-
-    private final Logger log = Logger.getLogger("Minecraft");
+public class ParkourPlugin extends JavaPlugin {
+    private final Logger log = getLogger();
 
     private CourseRegistry courseRegistry;
     private PlayerTracker playerTracker;
@@ -19,17 +20,17 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         this.courseRegistry = new CourseRegistry(this);
-        this.playerTracker = new PlayerTracker(courseRegistry);
+        this.playerTracker = new PlayerTracker(courseRegistry, getServer());
         this.courseBuilder = new CourseBuilder(courseRegistry);
 
-        PluginManager pm = this.getServer().getPluginManager();
+        PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(playerTracker, this);
         pm.registerEvents(courseBuilder, this);
 
-        this.getCommand("DireParkour").setExecutor(new DireParkourCMD(this));
+        this.getCommand("parkour").setExecutor(new ParkourCommand(this));
 
         log.info("===================================");
-        log.info(this.getName()+" has been Enabled!");
+        log.info(this.getName() + " has been Enabled!");
         log.info("===================================");
     }
 
@@ -38,7 +39,7 @@ public class Main extends JavaPlugin {
         for (Player builder : courseBuilder.getBuilders()) {
             courseBuilder.cancelBuild(builder);
         }
-        log.info(this.getName()+" has been Disabled!");
+        log.info(this.getName() + " has been Disabled!");
     }
 
     public CourseRegistry getCourseRegistry() {

@@ -1,4 +1,4 @@
-package net.direskies.direparkour;
+package net.direskies.direparkour.listeners;
 
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import net.direskies.direparkour.model.Course;
@@ -7,13 +7,9 @@ import net.direskies.direparkour.registries.CourseRegistry;
 import net.direskies.direparkour.util.FormatUtil;
 import net.direskies.direparkour.util.Locale;
 import net.direskies.direparkour.util.MaterialUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,11 +31,12 @@ public class PlayerTracker implements Listener {
 
     private final CourseRegistry courseRegistry;
     private final Map<Player, CourseProgress> tracking;
+    private final Server server;
 
-    private final MiniMessage serializer = MiniMessage.miniMessage();
-
-    public PlayerTracker(CourseRegistry courseRegistry) {
+    public PlayerTracker(CourseRegistry courseRegistry,
+                         Server server) {
         this.courseRegistry = courseRegistry;
+        this.server = server;
         this.tracking = new HashMap<>();
     }
 
@@ -62,16 +59,16 @@ public class PlayerTracker implements Listener {
 
                         String[] rewardCommands = progress.getCourse().getRewardCommands();
                         if (rewardCommands.length > 0) {
-                            ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
+                            ConsoleCommandSender consoleSender = server.getConsoleSender();
                             for (String rewardCommand : rewardCommands) {
-                                rewardCommand = rewardCommand.replaceAll("<player>", event.getPlayer().getName());
-                                rewardCommand = rewardCommand.replaceAll("<course>", progress.getCourse().getName());
-                                Bukkit.dispatchCommand(consoleSender, rewardCommand);
+                                rewardCommand = rewardCommand.replaceAll("%player%", event.getPlayer().getName());
+                                rewardCommand = rewardCommand.replaceAll("%course%", progress.getCourse().getName());
+                                server.dispatchCommand(consoleSender, rewardCommand);
                             }
                         }
                         event.getPlayer().sendMessage(Locale.PARKOUR_COMPLETED.msg(progress.getCourse().getName(), FormatUtil.formatDurationBetween(progress.getStartTime(), Instant.now())));
                     } else {
-                        event.getPlayer().sendMessage(Locale.PARKOUR_CHECKPOINT_REACHED.msg("" + detected, FormatUtil.formatDurationBetween(progress.getStartTime(), Instant.now())));
+                        event.getPlayer().sendMessage(Locale.PARKOUR_CHECKPOINT_REACHED.msg(String.valueOf(detected), FormatUtil.formatDurationBetween(progress.getStartTime(), Instant.now())));
                     }
                 } else if (progress.getCheckpoint() != detected){
                     event.getPlayer().sendMessage(Locale.PARKOUR_CHECKPOINT_WRONG.msg());

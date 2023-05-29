@@ -1,7 +1,7 @@
 package net.direskies.direparkour.registries;
 
-import net.direskies.direparkour.Main;
-import net.direskies.direparkour.PlayerTracker;
+import net.direskies.direparkour.ParkourPlugin;
+import net.direskies.direparkour.listeners.PlayerTracker;
 import net.direskies.direparkour.model.Course;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 
 public class CourseRegistry {
 
-    private final Main plugin;
+    private final ParkourPlugin plugin;
     private final Map<String, Course> courses;
     private final File registryFile;
 
-    public CourseRegistry(Main plugin) {
+    public CourseRegistry(ParkourPlugin plugin) {
         this.plugin = plugin;
         this.courses = new HashMap<>();
 
