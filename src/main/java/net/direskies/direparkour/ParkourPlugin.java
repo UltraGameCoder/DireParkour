@@ -1,6 +1,8 @@
 package net.direskies.direparkour;
 
 import net.direskies.direparkour.command.ParkourCommand;
+import net.direskies.direparkour.listeners.CourseBuilder;
+import net.direskies.direparkour.listeners.PlayerTracker;
 import net.direskies.direparkour.registries.CourseRegistry;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;

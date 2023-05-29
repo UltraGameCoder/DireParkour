@@ -1,4 +1,4 @@
-package net.direskies.direparkour;
+package net.direskies.direparkour.listeners;
 
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import net.direskies.direparkour.model.Course;

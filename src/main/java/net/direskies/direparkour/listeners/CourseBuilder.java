@@ -1,4 +1,4 @@
-package net.direskies.direparkour;
+package net.direskies.direparkour.listeners;
 
 import net.direskies.direparkour.model.Course;
 import net.direskies.direparkour.registries.CourseRegistry;

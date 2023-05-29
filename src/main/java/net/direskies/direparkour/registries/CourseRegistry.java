@@ -1,7 +1,7 @@
 package net.direskies.direparkour.registries;
 
 import net.direskies.direparkour.ParkourPlugin;
-import net.direskies.direparkour.PlayerTracker;
+import net.direskies.direparkour.listeners.PlayerTracker;
 import net.direskies.direparkour.model.Course;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
