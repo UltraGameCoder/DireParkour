@@ -42,101 +42,105 @@ public class ParkourCommand implements TabExecutor {
             player.sendMessage(Locale.CMD_DIREPARKOUR_INFO.msg());
             return true;
         }
-
-        if (args[0].equalsIgnoreCase("quit")) {
-            PlayerTracker playerCourseer = plugin.getPlayerTracker();
-            if (playerCourseer.isPlaying(player)) {
-                playerCourseer.quit(player);
-            } else {
-                player.sendMessage(Locale.PARKOUR_NOT_PLAYING.msg());
-            }
-            return true;
-        } else if (args[0].equalsIgnoreCase("list")) {
-            if (!player.hasPermission("direparkour.admin")) {
-                player.sendMessage(Locale.CMD_NO_PERMISSION.msg());
+        switch (args[0].toLowerCase(java.util.Locale.ROOT)) {
+            case "quit" -> {
+                PlayerTracker tracker = plugin.getPlayerTracker();
+                if (tracker.isPlaying(player)) tracker.quit(player);
+                else player.sendMessage(Locale.PARKOUR_NOT_PLAYING.msg());
                 return true;
             }
 
-            // List all courses here
-            Collection<Course> courses = plugin.getCourseRegistry().getCourses();
-            if (courses.size() == 0) {
-                player.sendMessage(Locale.CMD_DIREPARKOUR_LIST_EMTPY.msg());
-            } else {
-                player.sendMessage(Locale.CMD_DIREPARKOUR_LIST.msg());
-                for (Course course : courses) {
-                    String courseName = course.getName();
-                    int checkpoints = course.getCheckpoints().length;
-                    String worldName = course.getWorld().getName();
-                    player.sendMessage(Locale.CMD_DIREPARKOUR_LIST_ENTRY.msg(courseName, String.valueOf(checkpoints), worldName));
-                }
-            }
-
-            return true;
-        } else if (args[0].equalsIgnoreCase("setup")) {
-            if (!player.hasPermission("direparkour.admin")) {
-                player.sendMessage(Locale.CMD_NO_PERMISSION.msg());
-                return true;
-            }
-
-            if (args.length < 2) {
-                player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_MISSING_ARGUMENT.msg());
-                return true;
-            }
-
-            CourseBuilder courseBuilder = plugin.getCourseBuilder();
-            if (args[1].equalsIgnoreCase("start")) {
-
-                if (courseBuilder.isBuilding(player)) {
-                    player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_IN_PROGRESS.msg());
+            case "list" -> {
+                if (!player.hasPermission("direparkour.admin")) {
+                    player.sendMessage(Locale.CMD_NO_PERMISSION.msg());
                     return true;
                 }
 
-                courseBuilder.startBuild(player);
-                player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_START.msg());
-
-            } else if (args[1].equalsIgnoreCase("finish")) {
-
-                if (!courseBuilder.isBuilding(player)) {
-                    player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_NOT_IN_PROGRESS.msg());
-                    return true;
+                // List all courses here
+                Collection<Course> courses = plugin.getCourseRegistry().getCourses();
+                if (courses.size() == 0) {
+                    player.sendMessage(Locale.CMD_DIREPARKOUR_LIST_EMTPY.msg());
+                } else {
+                    player.sendMessage(Locale.CMD_DIREPARKOUR_LIST.msg());
+                    for (Course course : courses) {
+                        String courseName = course.getName();
+                        int checkpoints = course.getCheckpoints().length;
+                        String worldName = course.getWorld().getName();
+                        player.sendMessage(Locale.CMD_DIREPARKOUR_LIST_ENTRY.msg(courseName, String.valueOf(checkpoints), worldName));
+                    }
                 }
-
-                if (args.length < 3) {
-                    player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_FINISH_MISSING_COURSENAME.msg());
-                    return true;
-                }
-
-                courseBuilder.finishBuild(player, args[2]);
-
-            } else if (args[1].equalsIgnoreCase("cancel")) {
-                if (!courseBuilder.isBuilding(player)) {
-                    player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_NOT_IN_PROGRESS.msg());
-                    return true;
-                }
-                courseBuilder.cancelBuild(player);
-            }
-        } else if (args[0].equalsIgnoreCase("delete")) {
-            if (!player.hasPermission("direparkour.admin")) {
-                player.sendMessage(Locale.CMD_NO_PERMISSION.msg());
                 return true;
             }
 
-            if (args.length < 2) {
-                player.sendMessage(Locale.CMD_DIREPARKOUR_DELETE_SPECIFY_COURSE.msg());
-                return true;
+            case "setup" -> {
+                if (!player.hasPermission("direparkour.admin")) {
+                    player.sendMessage(Locale.CMD_NO_PERMISSION.msg());
+                    return true;
+                }
+
+                if (args.length < 2) {
+                    player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_MISSING_ARGUMENT.msg());
+                    return true;
+                }
+
+                CourseBuilder courseBuilder = plugin.getCourseBuilder();
+                switch (args[1].toLowerCase(java.util.Locale.ROOT)) {
+                    case "start" -> {
+                        if (courseBuilder.isBuilding(player)) {
+                            player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_IN_PROGRESS.msg());
+                            return true;
+                        }
+
+                        courseBuilder.startBuild(player);
+                        player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_START.msg());
+                    }
+
+                    case "finish" -> {
+                        if (!courseBuilder.isBuilding(player)) {
+                            player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_NOT_IN_PROGRESS.msg());
+                            return true;
+                        }
+
+                        if (args.length < 3) {
+                            player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_FINISH_MISSING_COURSENAME.msg());
+                            return true;
+                        }
+
+                        courseBuilder.finishBuild(player, args[2]);
+                    }
+
+                    case "cancel" -> {
+                        if (!courseBuilder.isBuilding(player)) {
+                            player.sendMessage(Locale.CMD_DIREPARKOUR_SETUP_NOT_IN_PROGRESS.msg());
+                            return true;
+                        }
+                        courseBuilder.cancelBuild(player);
+                    }
+                }
             }
 
-            Course course = plugin.getCourseRegistry().getCourseByName(args[1]);
-            if (course == null) {
-                player.sendMessage(Locale.COURSE_NOT_EXIST.msg(args[1]));
-                return true;
-            }
+            case "delete" -> {
+                if (!player.hasPermission("direparkour.admin")) {
+                    player.sendMessage(Locale.CMD_NO_PERMISSION.msg());
+                    return true;
+                }
 
-            // Your code for deleting the course...
-            plugin.getCourseRegistry().unregister(course);
-            player.sendMessage(Locale.CMD_DIREPARKOUR_DELETE.msg(course.getName()));
+                if (args.length < 2) {
+                    player.sendMessage(Locale.CMD_DIREPARKOUR_DELETE_SPECIFY_COURSE.msg());
+                    return true;
+                }
+
+                Course course = plugin.getCourseRegistry().getCourseByName(args[1]);
+                if (course == null) {
+                    player.sendMessage(Locale.COURSE_NOT_EXIST.msg(args[1]));
+                    return true;
+                }
+
+                // Your code for deleting the course...
+                plugin.getCourseRegistry().unregister(course);
+                player.sendMessage(Locale.CMD_DIREPARKOUR_DELETE.msg(course.getName()));
+            }
         }
-
         return true;
     }
 
