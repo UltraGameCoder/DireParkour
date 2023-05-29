@@ -11,8 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Logger;
 
 public class ParkourPlugin extends JavaPlugin {
-
-    private final Logger log = Logger.getLogger("Minecraft");
+    private final Logger log = getLogger();
 
     private CourseRegistry courseRegistry;
     private PlayerTracker playerTracker;
@@ -31,7 +30,7 @@ public class ParkourPlugin extends JavaPlugin {
         this.getCommand("parkour").setExecutor(new ParkourCommand(this));
 
         log.info("===================================");
-        log.info(this.getName()+" has been Enabled!");
+        log.info(this.getName() + " has been Enabled!");
         log.info("===================================");
     }
 
@@ -40,7 +39,7 @@ public class ParkourPlugin extends JavaPlugin {
         for (Player builder : courseBuilder.getBuilders()) {
             courseBuilder.cancelBuild(builder);
         }
-        log.info(this.getName()+" has been Disabled!");
+        log.info(this.getName() + " has been Disabled!");
     }
 
     public CourseRegistry getCourseRegistry() {
